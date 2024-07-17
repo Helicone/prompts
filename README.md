@@ -1,93 +1,115 @@
-## Helicone Prompt Formatter (HPF)
+# Helicone Prompts
 
-Helicone Prompt Formatter is a library designed to format JSON objects with the intention of using them for LLM applications.
+Helicone Prompt Formatter is a robust library designed to format JSON objects for Large Language Model (LLM) applications. It offers a streamlined approach to handling prompt templates, variable management, and versioning.
 
-Key features
+## Key Features
 
-1. Auto version new prompts and detect changes based on a framework
-2. Handle chat-like prompt templates
-3. Extract or place variables into prompts
+1. Automated versioning of new prompts with change detection based on a structured framework
+2. Seamless handling of chat-like prompt templates
+3. Efficient extraction and insertion of variables into prompts
 
-# Why does this exist?
+## Motivation
 
-### Problems with existing prompt formatting libraries
+Existing prompt formatting libraries often fall short in addressing the following challenges:
 
-1. They don't work with chat-like prompt templates
-2. They don't handle variables well
-3. They don't handle arrays well
+1. Limited support for chat-like prompt templates
+2. Inadequate variable handling mechanisms
+3. Insufficient array management capabilities
 
-// TODO Write more shit here
+HPF aims to bridge these gaps, providing a comprehensive solution for LLM prompt formatting.
 
-## Quick start
+## Quick Start
+
+Install the library using your preferred package manager:
 
 ```bash
-yarn add @helicone/prompt-formatter
+yarn add @helicone/prompts
 # OR
-npm install @helicone/prompt-formatter
+npm install @helicone/prompts
 ```
 
-```js
-import { hpf } from "@helicone/prompt-formatter";
+### Basic Usage
+
+```javascript
+import { hpf } from "@helicone/prompts";
 
 const promptWithInputs = hpf`
   Hello ${{ world: "variable" }}
 `;
 
-// prompt === "Hello <hpf-input key="world">variable</hpf-input>"
+console.log(promptWithInputs);
+// Output: 'Hello <hpf-prompt-input key="world" >variable</hpf-prompt-input>'
 ```
 
-### Pulling out variables
+### Variable Extraction
 
-```js
+```javascript
 import { parsePrompt } from "@helicone/prompt-formatter";
 
-const { variables, prompt } = parsePrompt(promptWithInputs);
+const { variables, prompt, text } = parsePrompt(
+  'Hello <hpf-prompt-input key="world">variable</hpf-prompt-input>'
+);
 
-// variables === { world: "variable" }
-// prompt === "Hello <hpf-input key="world" />"
+console.log(variables); // { world: "variable" }
+console.log(prompt);    // 'Hello <hpf-prompt-input key="world" />'
+console.log(text);      // "Hello variable"
 ```
 
-### Placing variables into prompts
+### Variable Insertion
 
-```js
-import { formatPrompt } from "@helicone/prompt-formatter";
+```javascript
+import { autoFillInputs } from "@helicone/prompt-formatter";
 
-const formattedPrompt = formatPrompt(promptWithInputs, { world: "variable" });
+const result = autoFillInputs({
+  inputs: {
+    world: "variable",
+  },
+  template: `Hello <hpf-prompt-input key="world" />`,
+  autoInputs: [],
+});
 
-// formattedPrompt === "Hello <hpf-input key="world">variable</hpf-input>"
+console.log(result); // "Hello variable"
 ```
 
-# Example with LLM request
+## LLM Object Handling
 
-### How it works
+HPF utilizes a custom variant of JSX developed by Helicone to manage LLM objects effectively.
 
-We use a variant of JSX that is developed by Helicone.
+### Example
 
-```js
-{
-  "model": "gpt-4-turbo",
-  "messages": [
+```javascript
+const obj = {
+  model: "gpt-4-turbo",
+  messages: [
     {
-      "role": "system",
-      "content": `Test <helicone-prompt-input key=\"test\">some input</helicone-prompt-input>`
+      role: "system",
+      content: 'Test <hpf-prompt-input key="test-1">input 1</hpf-prompt-input>',
     },
     {
-      "role": "user",
-      "content": [
+      role: "user",
+      content: [
         {
-          "type": "image_url",
-          "image_url": {
-            "url": "...",
-            "detail": "high"
-          }
-        }
-      ]
+          type: "image_url",
+          image_url: {
+            url: "...",
+            detail: "high",
+          },
+        },
+      ],
     },
     {
-      "role": "assistance",
-      "content": "Using the content above and given that <helicone-prompt-input key=\"test\">some input</helicone-prompt-input>, what are the images?"
-    }
+      role: "assistance",
+      content: 'Using the content above and given that <hpf-prompt-input key="test-2">input 2</hpf-prompt-input>, what are the images?',
+    },
   ],
-  "max_tokens": 700
-}
+  max_tokens: 700,
+};
+
+const { objectWithoutJSXTags, templateWithInputs } = parseJSXObject(obj, {
+  ignoreFields: ["max_tokens", "model"],
+});
+
+// Results demonstrated in the original example
 ```
+
+For more detailed information on usage and advanced features, please refer to our comprehensive documentation.
