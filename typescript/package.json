@@ -1,0 +1,26 @@
+{
+  "name": "helicone-prompt-formatter",
+  "version": "1.0.0",
+  "description": "Helicone Prompt Formatter is a library designed to format JSON objects with the intention of using them for LLM applications.",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^20.14.11",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.2",
+    "typescript": "^5.5.3"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.12"
+  }
+}
