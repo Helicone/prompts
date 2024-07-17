@@ -100,3 +100,15 @@ test("Should place variables in the correct place with less auto inputs", () => 
     model: "gpt-3.5-turbo",
   });
 });
+
+test("Simple text place", () => {
+  const result = autoFillInputs({
+    inputs: {
+      world: "variable",
+    },
+    template: `Hello <hpf-prompt-input key="world" />`,
+    autoInputs: [],
+  });
+
+  expect(result).toBe("Hello variable");
+});
