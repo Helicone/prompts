@@ -4,11 +4,11 @@ export function removeAutoInputs(template: any): {
 } {
   if (typeof template === "string") {
     const autoInputs = template.match(
-      /<hpf-auto-prompt-input\s*idx=\d+\s*\/\s*>/g
+      /<helicone-auto-prompt-input\s*idx=\d+\s*\/\s*>/g
     );
     return {
       template: template.replace(
-        /<hpf-auto-prompt-input\s*idx=\d+\s*\/\s*>/g,
+        /<helicone-auto-prompt-input\s*idx=\d+\s*\/\s*>/g,
         ""
       ),
       autoInputs: autoInputs || [],

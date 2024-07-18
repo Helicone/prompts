@@ -7,7 +7,7 @@ test("parse object", () => {
       {
         role: "system",
         content:
-          'Test <hpf-prompt-input key="test-1">input 1</hpf-prompt-input>',
+          'Test <helicone-prompt-input key="test-1">input 1</helicone-prompt-input>',
       },
       {
         role: "user",
@@ -24,7 +24,7 @@ test("parse object", () => {
       {
         role: "assistance",
         content:
-          'Using the content above and given that <hpf-prompt-input key="test-2">input 2</hpf-prompt-input>, what are the images?',
+          'Using the content above and given that <helicone-prompt-input key="test-2">input 2</helicone-prompt-input>, what are the images?',
       },
     ],
     max_tokens: 700,
@@ -69,13 +69,13 @@ test("parse object", () => {
     messages: [
       {
         role: "system",
-        content: 'Test <hpf-prompt-input key="test-1" />',
+        content: 'Test <helicone-prompt-input key="test-1" />',
       },
-      "<hpf-auto-prompt-input idx=0 />",
+      "<helicone-auto-prompt-input idx=0 />",
       {
         role: "assistance",
         content:
-          'Using the content above and given that <hpf-prompt-input key="test-2" />, what are the images?',
+          'Using the content above and given that <helicone-prompt-input key="test-2" />, what are the images?',
       },
     ],
     max_tokens: 700,
@@ -142,16 +142,16 @@ test("parse object chat example", () => {
     messages: [
       {
         role: "system",
-        content: `Hello <hpf-prompt-input key="world" />`,
+        content: `Hello <helicone-prompt-input key="world" />`,
       },
       {
         role: "user",
-        content: `What is the capital of the <hpf-prompt-input key="place" />?`,
+        content: `What is the capital of the <helicone-prompt-input key="place" />?`,
       },
-      "<hpf-auto-prompt-input idx=0 />",
-      "<hpf-auto-prompt-input idx=1 />",
-      "<hpf-auto-prompt-input idx=2 />",
-      "<hpf-auto-prompt-input idx=3 />",
+      "<helicone-auto-prompt-input idx=0 />",
+      "<helicone-auto-prompt-input idx=1 />",
+      "<helicone-auto-prompt-input idx=2 />",
+      "<helicone-auto-prompt-input idx=3 />",
     ],
     model: "gpt-3.5-turbo",
   });

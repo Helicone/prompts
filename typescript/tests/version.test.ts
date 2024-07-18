@@ -11,16 +11,16 @@ test("Should bump version with new index", () => {
     messages: [
       {
         role: "system",
-        content: `Hello <hpf-prompt-input key="world" />`,
+        content: `Hello <helicone-prompt-input key="world" />`,
       },
       {
         role: "user",
-        content: `What is the capital of the <hpf-prompt-input key="place" />?`,
+        content: `What is the capital of the <helicone-prompt-input key="place" />?`,
       },
-      "<hpf-auto-prompt-input idx=0 />",
-      "<hpf-auto-prompt-input idx=1 />",
-      "<hpf-auto-prompt-input idx=2 />",
-      "<hpf-auto-prompt-input idx=3 />",
+      "<helicone-auto-prompt-input idx=0 />",
+      "<helicone-auto-prompt-input idx=1 />",
+      "<helicone-auto-prompt-input idx=2 />",
+      "<helicone-auto-prompt-input idx=3 />",
     ],
     model: "gpt-3.5-turbo",
   };
@@ -29,17 +29,17 @@ test("Should bump version with new index", () => {
     messages: [
       {
         role: "system",
-        content: `Hello <hpf-prompt-input key="world" />`,
+        content: `Hello <helicone-prompt-input key="world" />`,
       },
       {
         role: "user",
-        content: `What is the capital of the <hpf-prompt-input key="place" />?`,
+        content: `What is the capital of the <helicone-prompt-input key="place" />?`,
       },
-      "<hpf-auto-prompt-input idx=0 />",
-      "<hpf-auto-prompt-input idx=1 />",
-      "<hpf-auto-prompt-input idx=2 />",
-      "<hpf-auto-prompt-input idx=3 />",
-      "<hpf-auto-prompt-input idx=4 />",
+      "<helicone-auto-prompt-input idx=0 />",
+      "<helicone-auto-prompt-input idx=1 />",
+      "<helicone-auto-prompt-input idx=2 />",
+      "<helicone-auto-prompt-input idx=3 />",
+      "<helicone-auto-prompt-input idx=4 />",
     ],
     model: "gpt-3.5-turbo",
   };
@@ -55,16 +55,16 @@ test("Should not bump version with less index", () => {
     messages: [
       {
         role: "system",
-        content: `Hello <hpf-prompt-input key="world" />`,
+        content: `Hello <helicone-prompt-input key="world" />`,
       },
       {
         role: "user",
-        content: `What is the capital of the <hpf-prompt-input key="place" />?`,
+        content: `What is the capital of the <helicone-prompt-input key="place" />?`,
       },
-      "<hpf-auto-prompt-input idx=0 />",
-      "<hpf-auto-prompt-input idx=1 />",
-      "<hpf-auto-prompt-input idx=2 />",
-      "<hpf-auto-prompt-input idx=3 />",
+      "<helicone-auto-prompt-input idx=0 />",
+      "<helicone-auto-prompt-input idx=1 />",
+      "<helicone-auto-prompt-input idx=2 />",
+      "<helicone-auto-prompt-input idx=3 />",
     ],
     model: "gpt-3.5-turbo",
   };
@@ -73,13 +73,13 @@ test("Should not bump version with less index", () => {
     messages: [
       {
         role: "system",
-        content: `Hello <hpf-prompt-input key="world" />`,
+        content: `Hello <helicone-prompt-input key="world" />`,
       },
       {
         role: "user",
-        content: `What is the capital of the <hpf-prompt-input key="place" />?`,
+        content: `What is the capital of the <helicone-prompt-input key="place" />?`,
       },
-      "<hpf-auto-prompt-input idx=0 />",
+      "<helicone-auto-prompt-input idx=0 />",
     ],
     model: "gpt-3.5-turbo",
   };
@@ -95,16 +95,16 @@ test("Should bump version with changes to content", () => {
     messages: [
       {
         role: "system",
-        content: `Hello <hpf-prompt-input key="world" />`,
+        content: `Hello <helicone-prompt-input key="world" />`,
       },
       {
         role: "user",
-        content: `What is the capital of the <hpf-prompt-input key="place" />?`,
+        content: `What is the capital of the <helicone-prompt-input key="place" />?`,
       },
-      "<hpf-auto-prompt-input idx=0 />",
-      "<hpf-auto-prompt-input idx=1 />",
-      "<hpf-auto-prompt-input idx=2 />",
-      "<hpf-auto-prompt-input idx=3 />",
+      "<helicone-auto-prompt-input idx=0 />",
+      "<helicone-auto-prompt-input idx=1 />",
+      "<helicone-auto-prompt-input idx=2 />",
+      "<helicone-auto-prompt-input idx=3 />",
     ],
     model: "gpt-3.5-turbo",
   };
@@ -113,16 +113,16 @@ test("Should bump version with changes to content", () => {
     messages: [
       {
         role: "system",
-        content: `Hello <hpf-prompt-input key="world" />`,
+        content: `Hello <helicone-prompt-input key="world" />`,
       },
       {
         role: "user",
-        content: `THIS IS NEW TEXT <hpf-prompt-input key="place" />?`,
+        content: `THIS IS NEW TEXT <helicone-prompt-input key="place" />?`,
       },
-      "<hpf-auto-prompt-input idx=0 />",
-      "<hpf-auto-prompt-input idx=1 />",
-      "<hpf-auto-prompt-input idx=2 />",
-      "<hpf-auto-prompt-input idx=3 />",
+      "<helicone-auto-prompt-input idx=0 />",
+      "<helicone-auto-prompt-input idx=1 />",
+      "<helicone-auto-prompt-input idx=2 />",
+      "<helicone-auto-prompt-input idx=3 />",
     ],
     model: "gpt-3.5-turbo",
   };

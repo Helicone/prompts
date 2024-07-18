@@ -69,16 +69,16 @@ export function parseJSXObject(
     if (typeof obj === "string") {
       // Remove JSX tags and keep content
       const stringWithoutJSXTags = obj.replace(
-        /<hpf-prompt-input\s*key="[^"]*"\s*>([\s\S]*?)<\/hpf-prompt-input>/g,
+        /<helicone-prompt-input\s*key="[^"]*"\s*>([\s\S]*?)<\/helicone-prompt-input>/g,
         "$1"
       );
 
       // Replace JSX tags with self-closing tags and extract inputs
       const templateWithSelfClosingTags = obj.replace(
-        /<hpf-prompt-input\s*key="([^"]*)"\s*>([\s\S]*?)<\/hpf-prompt-input>/g,
+        /<helicone-prompt-input\s*key="([^"]*)"\s*>([\s\S]*?)<\/helicone-prompt-input>/g,
         (_, key, value) => {
           inputs[key] = value.trim();
-          return `<hpf-prompt-input key="${key}" />`;
+          return `<helicone-prompt-input key="${key}" />`;
         }
       );
 
@@ -89,12 +89,12 @@ export function parseJSXObject(
       });
     } else if (typeof obj === "object" && obj !== null) {
       const text = JSON.stringify(obj);
-      if (!text.includes("hpf-prompt-input") && !notInput) {
+      if (!text.includes("helicone-prompt-input") && !notInput) {
         autoInputs.push(obj);
         return {
           stringWithoutJSXTags: JSON.parse(JSON.stringify(obj)),
           templateWithSelfClosingTags:
-            "<hpf-auto-prompt-input idx=" + autoPromptIndex++ + " />",
+            "<helicone-auto-prompt-input idx=" + autoPromptIndex++ + " />",
         };
       }
       const result: { [key: string]: any } = {};

@@ -13,11 +13,11 @@ export function autoFillInputs({
 
   function traverseAndTransform(obj: any): any {
     if (typeof obj === "string") {
-      if (obj.includes("<hpf-auto-prompt-input")) {
-        // Replace <hpf-auto-prompt-input> with autoInputs
+      if (obj.includes("<helicone-auto-prompt-input")) {
+        // Replace <helicone-auto-prompt-input> with autoInputs
         let index = 0;
         const stringWithAutoInputs = obj.replace(
-          /<hpf-auto-prompt-input\s*idx=(\d+)\s*\/>/g,
+          /<helicone-auto-prompt-input\s*idx=(\d+)\s*\/>/g,
           (_, idx) => {
             index = idx;
             return "";
@@ -26,9 +26,9 @@ export function autoFillInputs({
         return autoInputs[index] ?? REMOVE_KEY;
       }
 
-      // Replace <hpf-prompt-input> with actual values
+      // Replace <helicone-prompt-input> with actual values
       const stringWithInputs = obj.replace(
-        /<hpf-prompt-input\s*key="([^"]*)"\s*\/>/g,
+        /<helicone-prompt-input\s*key="([^"]*)"\s*\/>/g,
         (_, key) => {
           if (remainingInputValues[key] !== undefined) {
             const value = remainingInputValues[key];

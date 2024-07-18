@@ -12,16 +12,16 @@ test("Remove auto inputs", () => {
     messages: [
       {
         role: "system",
-        content: `Hello <hpf-prompt-input key="world" />`,
+        content: `Hello <helicone-prompt-input key="world" />`,
       },
       {
         role: "user",
-        content: `What is the capital of the <hpf-prompt-input key="place" />?`,
+        content: `What is the capital of the <helicone-prompt-input key="place" />?`,
       },
-      "<hpf-auto-prompt-input idx=0 />",
-      "<hpf-auto-prompt-input idx=1 />",
-      "<hpf-auto-prompt-input idx=2 />",
-      "<hpf-auto-prompt-input idx=3 />",
+      "<helicone-auto-prompt-input idx=0 />",
+      "<helicone-auto-prompt-input idx=1 />",
+      "<helicone-auto-prompt-input idx=2 />",
+      "<helicone-auto-prompt-input idx=3 />",
     ],
     model: "gpt-3.5-turbo",
   });
@@ -30,11 +30,11 @@ test("Remove auto inputs", () => {
     messages: [
       {
         role: "system",
-        content: `Hello <hpf-prompt-input key="world" />`,
+        content: `Hello <helicone-prompt-input key="world" />`,
       },
       {
         role: "user",
-        content: `What is the capital of the <hpf-prompt-input key="place" />?`,
+        content: `What is the capital of the <helicone-prompt-input key="place" />?`,
       },
     ],
     model: "gpt-3.5-turbo",

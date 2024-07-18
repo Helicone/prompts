@@ -27,14 +27,14 @@ test("Should place variables in the correct place", () => {
     messages: [
       {
         role: "system",
-        content: `Hello <hpf-prompt-input key="world" />`,
+        content: `Hello <helicone-prompt-input key="world" />`,
       },
       {
         role: "user",
-        content: `What is the capital of the <hpf-prompt-input key="place" />?`,
+        content: `What is the capital of the <helicone-prompt-input key="place" />?`,
       },
-      "<hpf-auto-prompt-input idx=0 />",
-      "<hpf-auto-prompt-input idx=1 />",
+      "<helicone-auto-prompt-input idx=0 />",
+      "<helicone-auto-prompt-input idx=1 />",
     ],
     model: "gpt-3.5-turbo",
   };
@@ -74,14 +74,14 @@ test("Should place variables in the correct place with less auto inputs", () => 
     messages: [
       {
         role: "system",
-        content: `Hello <hpf-prompt-input key="world" />`,
+        content: `Hello <helicone-prompt-input key="world" />`,
       },
       {
         role: "user",
-        content: `What is the capital of the <hpf-prompt-input key="place" />?`,
+        content: `What is the capital of the <helicone-prompt-input key="place" />?`,
       },
-      "<hpf-auto-prompt-input idx=0 />",
-      "<hpf-auto-prompt-input idx=1 />",
+      "<helicone-auto-prompt-input idx=0 />",
+      "<helicone-auto-prompt-input idx=1 />",
     ],
     model: "gpt-3.5-turbo",
   };
@@ -106,7 +106,7 @@ test("Simple text place", () => {
     inputs: {
       world: "variable",
     },
-    template: `Hello <hpf-prompt-input key="world" />`,
+    template: `Hello <helicone-prompt-input key="world" />`,
     autoInputs: [],
   });
 

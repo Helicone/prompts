@@ -2,7 +2,7 @@ export { parseJSXObject } from "./objectParser";
 export { shouldBumpVersion, removeAutoInputs } from "./objectVersionChecking";
 export { autoFillInputs } from "./fillInputs";
 
-const hpromptTag = "hpf-prompt-input";
+const hpromptTag = "helicone-prompt-input";
 
 export function prompt(
   strings: TemplateStringsArray,
@@ -99,21 +99,21 @@ export const hpfr = (chain: StringFormatter) =>
 export const parsePrompt = (prompt: string) => {
   // Remove JSX tags and keep content
   const stringWithoutJSXTags = prompt.replace(
-    /<hpf-prompt-input\s*key="[^"]*"\s*>([\s\S]*?)<\/\s*hpf-prompt-input\s*>/g,
+    /<helicone-prompt-input\s*key="[^"]*"\s*>([\s\S]*?)<\/\s*helicone-prompt-input\s*>/g,
     "$1"
   );
 
   const inputs: { [key: string]: string } = {};
   // Replace JSX tags with self-closing tags and extract inputs
   const templateWithSelfClosingTags = prompt.replace(
-    /<hpf-prompt-input\s*key="([^"]*)"\s*>([\s\S]*?)<\/\s*hpf-prompt-input\s*>/g,
+    /<helicone-prompt-input\s*key="([^"]*)"\s*>([\s\S]*?)<\/\s*helicone-prompt-input\s*>/g,
     (_, key, value) => {
       inputs[key] = value.trim();
-      return `<hpf-prompt-input key="${key}" />`;
+      return `<helicone-prompt-input key="${key}" />`;
     }
   );
 
-  // const regex = /<hpf-prompt-input\s*key="(\w+)"\s*\/>/g;
+  // const regex = /<helicone-prompt-input\s*key="(\w+)"\s*\/>/g;
   // const variables: { [key: string]: string } = {};
   // let match;
 
@@ -132,9 +132,12 @@ export const formatPrompt = (
   prompt: string,
   variables: Record<string, any>
 ) => {
-  return prompt.replace(/<hpf-prompt-input key="(\w+)" \/>/g, (match, key) => {
-    return `<${hpromptTag} key="${key}">${
-      variables[key] || ""
-    }</${hpromptTag}>`;
-  });
+  return prompt.replace(
+    /<helicone-prompt-input key="(\w+)" \/>/g,
+    (match, key) => {
+      return `<${hpromptTag} key="${key}">${
+        variables[key] || ""
+      }</${hpromptTag}>`;
+    }
+  );
 };
