@@ -38,7 +38,7 @@ const promptWithInputs = hpf`
 `;
 
 console.log(promptWithInputs);
-// Output: 'Hello <hpf-prompt-input key="world" >variable</hpf-prompt-input>'
+// Output: 'Hello <helicone-prompt-input key="world" >variable</helicone-prompt-input>'
 ```
 
 ### Variable Extraction
@@ -47,12 +47,12 @@ console.log(promptWithInputs);
 import { parsePrompt } from "@helicone/prompt-formatter";
 
 const { variables, prompt, text } = parsePrompt(
-  'Hello <hpf-prompt-input key="world">variable</hpf-prompt-input>'
+  'Hello <helicone-prompt-input key="world">variable</helicone-prompt-input>'
 );
 
 console.log(variables); // { world: "variable" }
-console.log(prompt);    // 'Hello <hpf-prompt-input key="world" />'
-console.log(text);      // "Hello variable"
+console.log(prompt); // 'Hello <helicone-prompt-input key="world" />'
+console.log(text); // "Hello variable"
 ```
 
 ### Variable Insertion
@@ -64,7 +64,7 @@ const result = autoFillInputs({
   inputs: {
     world: "variable",
   },
-  template: `Hello <hpf-prompt-input key="world" />`,
+  template: `Hello <helicone-prompt-input key="world" />`,
   autoInputs: [],
 });
 
@@ -83,7 +83,8 @@ const obj = {
   messages: [
     {
       role: "system",
-      content: 'Test <hpf-prompt-input key="test-1">input 1</hpf-prompt-input>',
+      content:
+        'Test <helicone-prompt-input key="test-1">input 1</helicone-prompt-input>',
     },
     {
       role: "user",
@@ -99,7 +100,8 @@ const obj = {
     },
     {
       role: "assistance",
-      content: 'Using the content above and given that <hpf-prompt-input key="test-2">input 2</hpf-prompt-input>, what are the images?',
+      content:
+        'Using the content above and given that <helicone-prompt-input key="test-2">input 2</helicone-prompt-input>, what are the images?',
     },
   ],
   max_tokens: 700,
