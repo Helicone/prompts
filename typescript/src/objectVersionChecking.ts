@@ -41,6 +41,22 @@ export function removeAutoInputs(template: any): {
   return { template: template, autoInputs: [] };
 }
 
+function deepCompare(a: any, b: any): boolean {
+  if (a === b) return true;
+
+  if (a && b && typeof a === "object" && typeof b === "object") {
+    if (Object.keys(a).length !== Object.keys(b).length) return false;
+
+    for (const key in a) {
+      if (!deepCompare(a[key], b[key])) return false;
+    }
+
+    return true;
+  }
+
+  return false;
+}
+
 export function shouldBumpVersion(versions: { old: object; new: object }): {
   shouldBump: boolean;
   shouldUpdateNotBump: boolean;
@@ -52,7 +68,7 @@ export function shouldBumpVersion(versions: { old: object; new: object }): {
     versions.new
   );
 
-  if (JSON.stringify(oldTemplate) !== JSON.stringify(newTemplate)) {
+  if (!deepCompare(oldTemplate, newTemplate)) {
     return { shouldBump: true, shouldUpdateNotBump: true };
   }
 

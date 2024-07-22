@@ -182,3 +182,50 @@ test("Should bump version with changes to content", () => {
 
   expect(result.shouldUpdateNotBump).toBe(true);
 });
+
+test("Should bump version with changes to content", () => {
+  const template = {
+    model: "gpt-3.5-turbo",
+    messages: [
+      {
+        role: "user",
+        content: [
+          {
+            text: '<helicone-prompt-input key="hello" /> test',
+            type: "text",
+          },
+        ],
+      },
+      "<helicone-auto-prompt-input idx=0 />",
+      "<helicone-auto-prompt-input idx=1 />",
+    ],
+    max_tokens: 100,
+    temperature: 1,
+  };
+
+  const newTemplate = {
+    model: "gpt-3.5-turbo",
+    messages: [
+      {
+        role: "user",
+        content: [
+          {
+            text: '<helicone-prompt-input key="hello" /> test',
+            type: "text",
+          },
+        ],
+      },
+      "<helicone-auto-prompt-input idx=0 />",
+    ],
+    max_tokens: 100,
+    temperature: 1,
+  };
+
+  const result = shouldBumpVersion({
+    old: template,
+    new: newTemplate,
+  });
+  expect(result.shouldBump).toBe(false);
+
+  expect(result.shouldUpdateNotBump).toBe(false);
+});
