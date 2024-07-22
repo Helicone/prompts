@@ -47,7 +47,9 @@ test("Should bump version with new index", () => {
     old: template,
     new: newTemplate,
   });
-  expect(result.shouldBump).toBe(true);
+  expect(result.shouldBump).toBe(false);
+
+  expect(result.shouldUpdateAutoInputs).toBe(true);
 });
 
 test("Should not bump version with less index", () => {

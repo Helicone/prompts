@@ -43,6 +43,7 @@ export function removeAutoInputs(template: any): {
 
 export function shouldBumpVersion(versions: { old: object; new: object }): {
   shouldBump: boolean;
+  shouldUpdateAutoInputs: boolean;
 } {
   const { template: oldTemplate, autoInputs: oldAutoInputs } = removeAutoInputs(
     versions.old
@@ -52,11 +53,11 @@ export function shouldBumpVersion(versions: { old: object; new: object }): {
   );
 
   if (JSON.stringify(oldTemplate) !== JSON.stringify(newTemplate)) {
-    return { shouldBump: true };
+    return { shouldBump: true, shouldUpdateAutoInputs: true };
   }
 
   if (newAutoInputs.length > oldAutoInputs.length) {
-    return { shouldBump: true };
+    return { shouldBump: false, shouldUpdateAutoInputs: true };
   }
-  return { shouldBump: false };
+  return { shouldBump: false, shouldUpdateAutoInputs: false };
 }
