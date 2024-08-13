@@ -229,3 +229,87 @@ test("Should bump version with changes to content", () => {
 
   expect(result.shouldUpdateNotBump).toBe(false);
 });
+
+test("Should not bump version with static prompt", () => {
+  const template = {
+    messages: [
+      {
+        role: "system",
+        content:
+          "<helicone-prompt-static>This is a static prompt</helicone-prompt-static>",
+      },
+      {
+        role: "user",
+        content: `What is the capital of the <helicone-prompt-input key="place" />?`,
+      },
+      "<helicone-auto-prompt-input idx=0 />",
+      "<helicone-auto-prompt-input idx=1 />",
+    ],
+    model: "gpt-3.5-turbo",
+  };
+
+  const newTemplate = {
+    messages: [
+      {
+        role: "system",
+        content:
+          "<helicone-prompt-static>This is a static prompt</helicone-prompt-static>",
+      },
+      {
+        role: "user",
+        content: `What is the capital of the <helicone-prompt-input key="place" />?`,
+      },
+      "<helicone-auto-prompt-input idx=0 />",
+      "<helicone-auto-prompt-input idx=1 />",
+    ],
+    model: "gpt-3.5-turbo",
+  };
+
+  const result = shouldBumpVersion({
+    old: template,
+    new: newTemplate,
+  });
+
+  expect(result.shouldBump).toBe(false);
+  expect(result.shouldUpdateNotBump).toBe(false);
+});
+
+test("Should bump version when static prompt changes", () => {
+  const template = {
+    messages: [
+      {
+        role: "system",
+        content:
+          "<helicone-prompt-static>This is a static prompt</helicone-prompt-static>",
+      },
+      {
+        role: "user",
+        content: `What is the capital of the <helicone-prompt-input key="place" />?`,
+      },
+    ],
+    model: "gpt-3.5-turbo",
+  };
+
+  const newTemplate = {
+    messages: [
+      {
+        role: "system",
+        content:
+          "<helicone-prompt-static>This is a different static prompt</helicone-prompt-static>",
+      },
+      {
+        role: "user",
+        content: `What is the capital of the <helicone-prompt-input key="place" />?`,
+      },
+    ],
+    model: "gpt-3.5-turbo",
+  };
+
+  const result = shouldBumpVersion({
+    old: template,
+    new: newTemplate,
+  });
+
+  expect(result.shouldBump).toBe(true);
+  expect(result.shouldUpdateNotBump).toBe(true);
+});
