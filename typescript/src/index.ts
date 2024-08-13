@@ -96,6 +96,20 @@ export const hpf = hpfc({ format: "template" });
 export const hpfr = (chain: StringFormatter) =>
   hpfc({ format: "template", chain });
 
+/**
+ * Helicone Prompt Static Formatter
+ * Wraps the entire text in <helicone-prompt-static> tags
+ */
+export const hpstatic = (
+  strings: TemplateStringsArray,
+  ...values: any[]
+): string => {
+  const content = strings.reduce((acc, str, i) => {
+    return acc + str + (values[i] || "");
+  }, "");
+  return `<helicone-prompt-static>${content}</helicone-prompt-static>`;
+};
+
 export const parsePrompt = (prompt: string) => {
   // Remove JSX tags and keep content
   const stringWithoutJSXTags = prompt.replace(

@@ -46,34 +46,37 @@ export interface ParseJSXObjectOptions {
   ignoreFields?: string[];
 }
 export function parseJSXObject(
-  input: object,
+  obj: any,
   options?: ParseJSXObjectOptions
 ): {
-  objectWithoutJSXTags: object;
+  objectWithoutJSXTags: any;
   templateWithInputs: TemplateWithInputs;
 } {
   const inputs: { [key: string]: string } = {};
-  const autoInputs: object[] = [];
+  const autoInputs: any[] = [];
   let autoPromptIndex = 0;
 
   function traverseAndTransform(
     obj: any,
     depth: number = 0,
     notInput: boolean = false
-  ):
-    | {
-        stringWithoutJSXTags: string;
-        templateWithSelfClosingTags: string;
-      }
-    | object {
+  ): any {
     if (typeof obj === "string") {
-      // Remove JSX tags and keep content
+      if (obj.includes("<helicone-prompt-static>")) {
+        return {
+          stringWithoutJSXTags: obj.replace(
+            /<helicone-prompt-static>(.*?)<\/helicone-prompt-static>/g,
+            "$1"
+          ),
+          templateWithSelfClosingTags: obj,
+        };
+      }
+
       const stringWithoutJSXTags = obj.replace(
         /<helicone-prompt-input\s*key="[^"]*"\s*>([\s\S]*?)<\/helicone-prompt-input>/g,
         "$1"
       );
 
-      // Replace JSX tags with self-closing tags and extract inputs
       const templateWithSelfClosingTags = obj.replace(
         /<helicone-prompt-input\s*key="([^"]*)"\s*>([\s\S]*?)<\/helicone-prompt-input>/g,
         (_, key, value) => {
@@ -84,17 +87,18 @@ export function parseJSXObject(
 
       return { stringWithoutJSXTags, templateWithSelfClosingTags };
     } else if (Array.isArray(obj)) {
-      return obj.map((o) => {
-        return traverseAndTransform(o, depth + 1);
-      });
+      return obj.map((o) => traverseAndTransform(o, depth + 1));
     } else if (typeof obj === "object" && obj !== null) {
       const text = JSON.stringify(obj);
-      if (!text.includes("helicone-prompt-input") && !notInput) {
+      if (
+        !text.includes("helicone-prompt-input") &&
+        !text.includes("helicone-prompt-static") &&
+        !notInput
+      ) {
         autoInputs.push(obj);
         return {
           stringWithoutJSXTags: JSON.parse(JSON.stringify(obj)),
-          templateWithSelfClosingTags:
-            "<helicone-auto-prompt-input idx=" + autoPromptIndex++ + " />",
+          templateWithSelfClosingTags: `<helicone-auto-prompt-input idx=${autoPromptIndex++} />`,
         };
       }
       const result: { [key: string]: any } = {};
@@ -110,34 +114,52 @@ export function parseJSXObject(
     return obj;
   }
 
-  const transformed = traverseAndTransform(input);
-  console.log("transformed", transformed);
+  const transformed = traverseAndTransform(obj);
 
-  // Construct the final output structure
-  const objectWithoutJSXTags = JSON.parse(
-    JSON.stringify(transformed, (key, value) =>
-      typeof value === "object" &&
-      value !== null &&
-      "stringWithoutJSXTags" in value
-        ? value.stringWithoutJSXTags
-        : value
-    )
-  );
+  function reconstructObject(obj: any): any {
+    if (typeof obj === "object" && obj !== null) {
+      if (
+        "stringWithoutJSXTags" in obj &&
+        "templateWithSelfClosingTags" in obj
+      ) {
+        return obj.stringWithoutJSXTags;
+      }
+      if (Array.isArray(obj)) {
+        return obj.map(reconstructObject);
+      }
+      const result: { [key: string]: any } = {};
+      for (const key of Object.keys(obj)) {
+        result[key] = reconstructObject(obj[key]);
+      }
+      return result;
+    }
+    return obj;
+  }
 
-  const templateWithInputs = JSON.parse(
-    JSON.stringify(transformed, (key, value) =>
-      typeof value === "object" &&
-      value !== null &&
-      "templateWithSelfClosingTags" in value
-        ? value.templateWithSelfClosingTags
-        : value
-    )
-  );
+  function reconstructTemplate(obj: any): any {
+    if (typeof obj === "object" && obj !== null) {
+      if (
+        "stringWithoutJSXTags" in obj &&
+        "templateWithSelfClosingTags" in obj
+      ) {
+        return obj.templateWithSelfClosingTags;
+      }
+      if (Array.isArray(obj)) {
+        return obj.map(reconstructTemplate);
+      }
+      const result: { [key: string]: any } = {};
+      for (const key of Object.keys(obj)) {
+        result[key] = reconstructTemplate(obj[key]);
+      }
+      return result;
+    }
+    return obj;
+  }
 
   return {
-    objectWithoutJSXTags,
+    objectWithoutJSXTags: reconstructObject(transformed),
     templateWithInputs: {
-      template: templateWithInputs,
+      template: reconstructTemplate(transformed),
       inputs,
       autoInputs,
     },
