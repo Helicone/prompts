@@ -1,0 +1,21 @@
+# General
+.env
+.DS_Store
+
+# TypeScript/JavaScript
+dist/
+node_modules/
+.vscode/
+coverage/
+*.log
+*.tsbuildinfo
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+*.egg-info/
+build/
