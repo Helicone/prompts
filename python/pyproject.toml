@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "helicone_prompts"
-version = "1.0.11"
+version = "0.0.1"
 description = "Helicone Prompt Formatter is a library designed to format JSON objects with the intention of using them for LLM applications."
 authors = ["Helicone, Inc. <help@helicone.ai>"]
 readme = "README.md"
