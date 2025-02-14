@@ -1,6 +1,6 @@
-export { parseJSXObject } from "./objectParser";
-export { shouldBumpVersion, removeAutoInputs } from "./objectVersionChecking";
 export { autoFillInputs } from "./fillInputs";
+export { parseJSXObject } from "./objectParser";
+export { removeAutoInputs, shouldBumpVersion } from "./objectVersionChecking";
 
 const hpromptTag = "helicone-prompt-input";
 
