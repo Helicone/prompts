@@ -1,6 +1,6 @@
-export { parseJSXObject } from "./objectParser";
-export { shouldBumpVersion, removeAutoInputs } from "./objectVersionChecking";
 export { autoFillInputs } from "./fillInputs";
+export { parseJSXObject } from "./objectParser";
+export { removeAutoInputs, shouldBumpVersion } from "./objectVersionChecking";
 
 const hpromptTag = "helicone-prompt-input";
 
@@ -142,6 +142,12 @@ export const parsePrompt = (prompt: string) => {
   };
 };
 
+/**
+ * Formats a prompt template by replacing placeholder tags with their corresponding values.
+ * @param prompt - The prompt template containing helicone-prompt-input placeholder tags
+ * @param variables - An object mapping variable keys to their values
+ * @returns The formatted prompt with all placeholders replaced with their values
+ */
 export const formatPrompt = (
   prompt: string,
   variables: Record<string, any>
@@ -155,3 +161,81 @@ export const formatPrompt = (
     }
   );
 };
+
+/**
+ * Removes indentation and trims leading/trailing empty lines from a string.
+ * The indentation level is determined by:
+ * 1. For multi-line strings: Uses the indentation of the second non-empty line
+ * 2. For single-line strings: Uses the indentation of that line
+ * Lines with less indentation than the determined amount are left-trimmed
+ *
+ * @param str - The string to process
+ * @returns The processed string with consistent indentation and no leading/trailing empty lines
+ */
+function dedentHpfo(str: string): string {
+  const lines = str.split(/\r?\n/);
+  // Remove leading empty lines
+  while (lines.length && lines[0].trim() === "") {
+    lines.shift();
+  }
+  // Remove trailing empty lines
+  while (lines.length && lines[lines.length - 1].trim() === "") {
+    lines.pop();
+  }
+
+  let dedentAmount = 0;
+  if (lines.length >= 2) {
+    const secondLineMatch = lines[1].match(/^(\s*)/);
+    dedentAmount = secondLineMatch ? secondLineMatch[1].length : 0;
+  } else if (lines.length === 1) {
+    const onlyLineMatch = lines[0].match(/^(\s*)/);
+    dedentAmount = onlyLineMatch ? onlyLineMatch[1].length : 0;
+  }
+
+  const outdentedLines = lines.map((line) => {
+    const currentIndentMatch = line.match(/^(\s*)/);
+    const currentIndent = currentIndentMatch ? currentIndentMatch[1].length : 0;
+    if (currentIndent >= dedentAmount) {
+      return line.slice(dedentAmount);
+    } else {
+      return line.trimStart();
+    }
+  });
+  return outdentedLines.join("\n");
+}
+
+/**
+ * A string formatter that processes template literals to normalize their indentation
+ * and remove leading/trailing empty lines. Used internally by hpfo.
+ *
+ * @param strings - The template literal string parts
+ * @param values - The interpolated values
+ * @returns The processed string with normalized indentation
+ */
+const outdentFormatter: StringFormatter = (
+  strings: TemplateStringsArray,
+  ...values: any[]
+): string => {
+  const constructed = strings.reduce(
+    (acc, str, i) => acc + str + (values[i] || ""),
+    ""
+  );
+  return dedentHpfo(constructed);
+};
+
+/**
+ * Helicone Prompt Formatter with Outdent
+ * A template literal tag that combines helicone prompt formatting with automatic indentation normalization.
+ * It removes common leading spaces and trims leading/trailing empty lines while preserving the relative
+ * indentation of the content. This is particularly useful for multi-line prompts where you want to
+ * maintain code formatting in your source files without affecting the final prompt output.
+ *
+ * @example
+ * const prompt = hpfo`
+ *   This is a multi-line prompt
+ *     with different levels of
+ *       indentation and a ${{ var: "value" }}
+ *   that will be normalized.
+ * `;
+ */
+export const hpfo = hpfc({ format: "template", chain: outdentFormatter });
