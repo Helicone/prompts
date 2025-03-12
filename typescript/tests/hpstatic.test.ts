@@ -38,6 +38,35 @@ describe("hpstatic", () => {
       '<helicone-prompt-static><script>alert("XSS")</script></helicone-prompt-static>'
     );
   });
+
+  test("should parse a string with both static and input tags", () => {
+    const inputObj = {
+      prompt:
+        '<helicone-prompt-static>You are a helpful assistant.</helicone-prompt-static> Write a story about <helicone-prompt-input key="character">a secret agent</helicone-prompt-input>',
+    };
+
+    const { objectWithoutJSXTags, templateWithInputs } =
+      parseJSXObject(inputObj);
+
+    // Check that JSX tags are removed correctly
+    expect(objectWithoutJSXTags).toEqual({
+      prompt: "You are a helpful assistant. Write a story about a secret agent",
+    });
+
+    // Check that the template is created correctly
+    expect(templateWithInputs.template).toEqual({
+      prompt:
+        '<helicone-prompt-static>You are a helpful assistant.</helicone-prompt-static> Write a story about <helicone-prompt-input key="character" />',
+    });
+
+    // Check that inputs are extracted correctly
+    expect(templateWithInputs.inputs).toEqual({
+      character: "a secret agent",
+    });
+
+    // Check that there are no auto inputs
+    expect(templateWithInputs.autoInputs).toEqual([]);
+  });
 });
 
 test("parse object with static prompt", () => {

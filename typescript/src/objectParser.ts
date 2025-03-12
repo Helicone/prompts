@@ -63,11 +63,35 @@ export function parseJSXObject(
   ): any {
     if (typeof obj === "string") {
       if (obj.includes("<helicone-prompt-static>")) {
-        return {
-          stringWithoutJSXTags: obj.replace(
-            /<helicone-prompt-static>(.*?)<\/helicone-prompt-static>/g,
+        // First, process static tags
+        const stringWithoutStaticTags = obj.replace(
+          /<helicone-prompt-static>(.*?)<\/helicone-prompt-static>/g,
+          "$1"
+        );
+
+        // Then, check if there are also input tags and process them
+        if (stringWithoutStaticTags.includes("<helicone-prompt-input")) {
+          // Process input tags
+          const stringWithoutJSXTags = stringWithoutStaticTags.replace(
+            /<helicone-prompt-input\s*key="[^"]*"\s*>([\s\S]*?)<\/helicone-prompt-input>/g,
             "$1"
-          ),
+          );
+
+          // Create template with self-closing input tags
+          const templateWithSelfClosingTags = obj.replace(
+            /<helicone-prompt-input\s*key="([^"]*)"\s*>([\s\S]*?)<\/helicone-prompt-input>/g,
+            (_, key, value) => {
+              inputs[key] = value.trim();
+              return `<helicone-prompt-input key="${key}" />`;
+            }
+          );
+
+          return { stringWithoutJSXTags, templateWithSelfClosingTags };
+        }
+
+        // If no input tags, just return the processed static tags
+        return {
+          stringWithoutJSXTags: stringWithoutStaticTags,
           templateWithSelfClosingTags: obj,
         };
       }
