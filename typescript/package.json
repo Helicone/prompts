@@ -1,6 +1,6 @@
 {
   "name": "@helicone/prompts",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "[DEPRECATED] Helicone Prompt Formatter is a library designed to format JSON objects with the intention of using them for LLM applications.",
   "deprecated": true,
   "main": "dist/index.js",
