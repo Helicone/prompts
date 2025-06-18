@@ -1,6 +1,7 @@
 from typing import Dict, Any, List
 import copy
 import re
+import warnings
 
 REMOVE_KEY = "helicone-to-remove"
 
@@ -18,7 +19,14 @@ def auto_fill_inputs(
 
     Returns:
         Filled template with all inputs replaced
+        
+    Warning: This functionality is deprecated and will no longer receive updates.
     """
+    warnings.warn(
+        "This functionality is deprecated and will no longer receive updates.",
+        DeprecationWarning,
+        stacklevel=2
+    )
     remaining_input_values = copy.deepcopy(inputs)
 
     def traverse_and_transform(obj: Any) -> Any:
