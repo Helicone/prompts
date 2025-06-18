@@ -1,5 +1,6 @@
 import json
 from typing import Any, Dict, List, Optional
+import warnings
 
 
 class TemplateWithInputs:
@@ -12,9 +13,16 @@ class TemplateWithInputs:
         inputs: A dict mapping the 'key' attributes to their corresponding text content.
         auto_inputs: A list of objects automatically extracted from the input object
                      (when no JSX tags are present and not otherwise ignored).
+                     
+    Warning: This functionality is deprecated and will no longer receive updates.
     """
 
     def __init__(self, template: Any, inputs: Dict[str, str], auto_inputs: List[Any]):
+        warnings.warn(
+            "This functionality is deprecated and will no longer receive updates.",
+            DeprecationWarning,
+            stacklevel=2
+        )
         self.template = template
         self.inputs = inputs
         self.auto_inputs = auto_inputs
@@ -26,9 +34,16 @@ class ParseJSXObjectOptions:
 
     Attributes:
         ignore_fields: A list of field names that should not be processed for auto-input extraction.
+        
+    Warning: This functionality is deprecated and will no longer receive updates.
     """
 
     def __init__(self, ignore_fields: Optional[List[str]] = None):
+        warnings.warn(
+            "This functionality is deprecated and will no longer receive updates.",
+            DeprecationWarning,
+            stacklevel=2
+        )
         self.ignore_fields = ignore_fields if ignore_fields is not None else []
 
 
@@ -50,7 +65,14 @@ def parse_jsx_object(
                                     by their text.
             'templateWithInputs': A TemplateWithInputs object containing the processed template
                                   (with self-closing tags) and extracted inputs.
+                                  
+    Warning: This functionality is deprecated and will no longer receive updates.
     """
+    warnings.warn(
+        "This functionality is deprecated and will no longer receive updates.",
+        DeprecationWarning,
+        stacklevel=2
+    )
     if options is None:
         options = ParseJSXObjectOptions()
 

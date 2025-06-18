@@ -1,5 +1,6 @@
 import re
 from typing import Any, Dict, List
+import warnings
 
 
 def remove_auto_inputs(template: Any) -> Dict[str, Any]:
@@ -7,7 +8,14 @@ def remove_auto_inputs(template: Any) -> Dict[str, Any]:
     Returns a dict with:
         - 'template': The template with <helicone-auto-prompt-input ...> removed
         - 'autoInputs': A list capturing each removed auto-input placeholder
+        
+    Warning: This functionality is deprecated and will no longer receive updates.
     """
+    warnings.warn(
+        "This functionality is deprecated and will no longer receive updates.",
+        DeprecationWarning,
+        stacklevel=2
+    )
     # If the template is a string
     if isinstance(template, str):
         # Find all auto-input placeholders
@@ -62,7 +70,14 @@ def remove_auto_inputs(template: Any) -> Dict[str, Any]:
 def deep_compare(a: Any, b: Any) -> bool:
     """
     Deep comparison of two objects.
+    
+    Warning: This functionality is deprecated and will no longer receive updates.
     """
+    warnings.warn(
+        "This functionality is deprecated and will no longer receive updates.",
+        DeprecationWarning,
+        stacklevel=2
+    )
     if a == b:
         return True
     if isinstance(a, dict) and isinstance(b, dict):
@@ -79,7 +94,14 @@ def should_bump_version(versions: Dict[str, Any]) -> Dict[str, bool]:
     """
     Expected versions dict keys: 'old' and 'new'.
     Returns a dict with two booleans: 'shouldBump' and 'shouldUpdateNotBump'.
+    
+    Warning: This functionality is deprecated and will no longer receive updates.
     """
+    warnings.warn(
+        "This functionality is deprecated and will no longer receive updates.",
+        DeprecationWarning,
+        stacklevel=2
+    )
     old_removed = remove_auto_inputs(versions["old"])
     old_template, old_auto_inputs = old_removed["template"], old_removed["autoInputs"]
 
