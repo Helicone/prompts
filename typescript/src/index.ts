@@ -1,3 +1,7 @@
+console.warn(
+  "\x1b[33m⚠️  Warning: @helicone/prompts package is deprecated and will no longer receive updates.\x1b[0m"
+);
+
 export { autoFillInputs } from "./fillInputs";
 export { parseJSXObject } from "./objectParser";
 export { removeAutoInputs, shouldBumpVersion } from "./objectVersionChecking";

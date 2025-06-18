@@ -1,5 +1,7 @@
 # Helicone Prompts
 
+> ⚠️ **Deprecation Notice**: This package is deprecated and will no longer receive updates.
+
 Helicone Prompt Formatter is a robust library designed to format JSON objects for Large Language Model (LLM) applications. It offers a streamlined approach to handling prompt templates, variable management, and versioning.
 
 ## Key Features
