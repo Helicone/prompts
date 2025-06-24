@@ -9,7 +9,7 @@ export function autoFillInputs({
   autoInputs: any[];
   template: any;
 }): any {
-  const remainingInputValues = JSON.parse(JSON.stringify(inputs));
+  const inputValues = JSON.parse(JSON.stringify(inputs));
 
   function traverseAndTransform(obj: any): any {
     if (typeof obj === "string") {
@@ -30,9 +30,8 @@ export function autoFillInputs({
       const stringWithInputs = obj.replace(
         /<helicone-prompt-input\s*key="([^"]*)"\s*\/>/g,
         (_, key) => {
-          if (remainingInputValues[key] !== undefined) {
-            const value = remainingInputValues[key];
-            delete remainingInputValues[key];
+          if (inputValues[key] !== undefined) {
+            const value = inputValues[key];
             return value;
           }
           return "";
